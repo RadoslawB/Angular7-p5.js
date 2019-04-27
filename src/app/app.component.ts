@@ -38,5 +38,4 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.p5 = new P5(sketch, this.sketch.nativeElement);
   }
-
 }

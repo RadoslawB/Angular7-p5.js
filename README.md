@@ -1,27 +1,48 @@
 # AngularP5
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+## P5 setup for Angular7.
 
-## Development server
+```typescript
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import * as P5 from 'p5';
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+// define callback for p5 constructor
+const sketch = (p: P5) => {
 
-## Code scaffolding
+  p.preload = () => {
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  };
 
-## Build
+  p.setup = () => {
+    p.createCanvas(p.windowWidth, p.windowHeight);
+  };
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
 
-## Running unit tests
+  p.draw = () => {
+    p.background(255);
+    p.text('P5 working fine.', 100, 100);
+  };
+};
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+  p5: P5;
+  @ViewChild('sketch') sketch: ElementRef;
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  constructor() {
 
-## Further help
+  }
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  ngOnInit(): void {
+    this.p5 = new P5(sketch, this.sketch.nativeElement);
+  }
+}
+```
